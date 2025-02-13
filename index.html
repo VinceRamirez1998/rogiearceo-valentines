@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Valentine's Day ❤️</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+        display: block;
+      }
+      body {
+        text-align: center;
+        background-color: pink;
+        font-family: "Montserrat", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        max-width: 600px;
+      }
+      @keyframes glow {
+        0% {
+          box-shadow: 0 0 15px rgba(241, 37, 10, 0.8);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(250, 12, 4, 0.6);
+        }
+        100% {
+          box-shadow: 0 0 15px rgba(253, 38, 38, 0.8);
+        }
+      }
+
+      .gallery {
+        display: none;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        animation: glow 1.5s infinite alternate ease-in-out;
+      }
+
+      .hidden-message {
+        display: none;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        animation: glow 1.5s infinite alternate ease-in-out;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 1s ease-in-out, transform 0.5s ease-in-out;
+      }
+
+      .hidden-message.show {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .question-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        animation: glow 1.5s infinite alternate ease-in-out;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+      }
+
+      .question-container input {
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ff69b4;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .question-container button {
+        background: #ff69b4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+
+      .question-container button:hover {
+        background: #ff4d94;
+      }
+
+      #password-box {
+        display: none;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        animation: glow 1.5s infinite alternate ease-in-out;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+      }
+
+      #password-box p {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      #password-box input {
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ff69b4;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+      }
+
+      #password-box button {
+        background: #ff69b4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+
+      #password-box button:hover {
+        background: #ff4d94;
+      }
+
+      .gallery {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 500px;
+        height: 500px;
+        position: relative;
+      }
+      .gallery > img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 10px solid #f2f2f2;
+        box-shadow: 0 0 4px #0007;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+      .gallery > img.active {
+        opacity: 1;
+      }
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: pink;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        animation: glow 1.5s infinite alternate ease-in-out;
+      }
+      .modal-content button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+      }
+
+      @media screen and (max-width: 480px) {
+        .gallery > img {
+          width: 65%;
+          margin-top: 40px;
+        }
+        .messages {
+          font-size: 1.3rem;
+          padding-top: 30px;
+        }
+        .messages1 {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2>Are you deserving to be my Valentine? 💘</h2>
+        <button
+          onclick="answerModal(true)"
+          style="background: #ff69b4; color: white"
+        >
+          Yes
+        </button>
+        <button onclick="answerModal(false)" style="background: #ddd">
+          No
+        </button>
+      </div>
+    </div>
+
+    <div class="container" id="main-content" style="display: none">
+      <div class="question-container" id="question-box">
+        <p>Question 1: When is our monthsarry?</p>
+        <input type="number" id="answer" placeholder="ex: 11" />
+        <button onclick="checkAnswer()">Submit</button>
+      </div>
+
+      <div class="question-container" id="question-box-2" style="display: none">
+        <p>Question 2: What date is my birthday?</p>
+        <input type="text" id="birthday" placeholder="ex: January 22, 2001" />
+        <button onclick="checkBirthday()">Submit</button>
+      </div>
+
+      <div
+        id="password-box"
+        style="
+          display: none;
+          background-color: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <p>Enter the password to reveal your special message:</p>
+        <p style="color: gray">Clue: Our Call sign + Year today</p>
+        <input type="password" id="password" placeholder="Enter password" />
+        <button onclick="checkPassword()">Unlock</button>
+      </div>
+
+      <div class="hidden-message" id="message" style="display: none">
+        <canvas id="heartCanvas"></canvas>
+        <h1 class="messages">❤️ Happy Valentine's Day! ❤️</h1>
+        <p class="messages1">
+          You are the best thing that ever happened to me! 😘
+        </p>
+        <p style="padding-bottom: 20px" class="messages1">
+          I love you so much babeeee!
+        </p>
+        <div class="gallery" id="gallery">
+          <img src="image1.JPG" alt="photo" class="active" />
+          <img src="image2.JPG" alt="photo" />
+          <img src="image3.JPG" alt="photo" />
+          <img src="image4.JPG" alt="photo" />
+          <img src="image5.JPG" alt="photo" />
+          <img src="image6.JPG" alt="photo" />
+          <img src="image7.JPG" alt="photo" />
+          <img src="image8.JPG" alt="photo" />
+          <img src="image9.JPG" alt="photo" />
+          <img src="image10.JPG" alt="photo" />
+          <img src="image11.JPG" alt="photo" />
+          <img src="image12.JPG" alt="photo" />
+          <img src="image13.JPG" alt="photo" />
+          <img src="image14.JPG" alt="photo" />
+          <img src="image15.JPG" alt="photo" />
+          <img src="image16.JPG" alt="photo" />
+          <img src="image17.JPG" alt="photo" />
+          <img src="image18.JPG" alt="photo" />
+          <img src="image19.JPG" alt="photo" />
+          <img src="image20.JPG" alt="photo" />
+          <img src="image21.JPG" alt="photo" />
+          <img src="image22.JPG" alt="photo" />
+          <img src="image23.JPG" alt="photo" />
+          <img src="image24.JPG" alt="photo" />
+          <img src="image25.JPG" alt="photo" />
+          <img src="image26.JPG" alt="photo" />
+          <img src="image27.JPG" alt="photo" />
+          <img src="image28.JPG" alt="photo" />
+          <img src="image29.JPG" alt="photo" />
+        </div>
+      </div>
+    </div>
+
+    <audio id="valentine-music" loop>
+      <source src="music.mp3" type="audio/mp3" />
+    </audio>
+
+    <script>
+      const canvas = document.getElementById("heartCanvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const hearts = [];
+
+      function random(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function createHeart() {
+        return {
+          x: random(0, canvas.width),
+          y: canvas.height + 10,
+          size: random(8, 20),
+          speedX: random(-1, 1),
+          speedY: random(-2, -4),
+          alpha: random(0.5, 1),
+        };
+      }
+
+      function drawHeart(x, y, size, alpha) {
+        ctx.fillStyle = `rgba(255, 0, 100, ${alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.bezierCurveTo(
+          x - size / 2,
+          y - size,
+          x - size,
+          y + size / 3,
+          x,
+          y + size
+        );
+        ctx.bezierCurveTo(x + size, y + size / 3, x + size / 2, y - size, x, y);
+        ctx.fill();
+      }
+
+      function updateHearts() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = hearts.length - 1; i >= 0; i--) {
+          const heart = hearts[i];
+          heart.x += heart.speedX;
+          heart.y += heart.speedY;
+          heart.alpha -= 0.005;
+
+          drawHeart(heart.x, heart.y, heart.size, heart.alpha);
+
+          if (heart.y < -10 || heart.alpha <= 0) {
+            hearts.splice(i, 1);
+          }
+        }
+      }
+
+      function animate() {
+        updateHearts();
+        if (Math.random() < 0.05) {
+          hearts.push(createHeart());
+        }
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+
+      animate();
+    </script>
+
+    <script>
+      function answerModal(isDeserving) {
+        document.getElementById("modal").style.display = "none";
+        if (isDeserving) {
+          document.getElementById("main-content").style.display = "flex";
+          document.getElementById("question-box").style.display = "block";
+        } else {
+          alert("You are not deserving to be my Valentine!");
+        }
+      }
+
+      function checkAnswer() {
+        if (document.getElementById("answer").value == "22") {
+          document.getElementById("question-box").style.display = "none";
+          document.getElementById("question-box-2").style.display = "block";
+        } else {
+          alert("Wrong answer! Try again.");
+        }
+      }
+
+      function checkBirthday() {
+        if (
+          document.getElementById("birthday").value.toLowerCase() ===
+          "july 31, 1998"
+        ) {
+          document.getElementById("question-box-2").style.display = "none";
+          document.getElementById("password-box").style.display = "block";
+        } else {
+          alert("Wrong answer! Try again.");
+        }
+      }
+
+      function checkPassword() {
+        const passwordInput = document.getElementById("password").value;
+        if (
+          passwordInput === "babe2025" ||
+          passwordInput === "Babe2025" ||
+          passwordInput === "BABE2025"
+        ) {
+          let messageBox = document.getElementById("message");
+          document.getElementById("password-box").style.display = "none";
+
+          // Show message with animation
+          messageBox.style.display = "block";
+          setTimeout(() => {
+            messageBox.classList.add("show");
+          }, 200); // Slight delay to trigger transition
+
+          document.getElementById("valentine-music").play();
+          startGallery();
+        } else {
+          alert("Wrong password! Try again.");
+        }
+      }
+
+      function startGallery() {
+        let images = document.querySelectorAll(".gallery img");
+        let index = 0;
+        setInterval(() => {
+          images.forEach((img) => img.classList.remove("active"));
+          index = (index + 1) % images.length;
+          images[index].classList.add("active");
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
