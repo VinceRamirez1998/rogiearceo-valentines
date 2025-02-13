@@ -112,15 +112,6 @@
         }
       }
 
-      .gallery {
-        display: none;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        animation: glow 1.5s infinite alternate ease-in-out;
-      }
-
       .hidden-message {
         display: none;
         background: white;
@@ -131,6 +122,7 @@
         opacity: 0;
         transform: scale(0.8);
         transition: opacity 1s ease-in-out, transform 0.5s ease-in-out;
+        border: 1px solid red;
       }
 
       .hidden-message.show {
@@ -231,15 +223,24 @@
         width: 500px;
         height: 500px;
         position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        border: 1px solid red;
+        animation: glow 1.5s infinite alternate ease-in-out;
+        margin: 0 auto; /* Centers the gallery itself */
       }
+
       .gallery > img {
         position: absolute;
+        top: 50%;
+        left: 50%;
         width: 100%;
         height: 100%;
         object-fit: cover;
         border: 10px solid #f2f2f2;
         box-shadow: 0 0 4px #0007;
         opacity: 0;
+        transform: translate(-50%, -50%); /* Centers each image */
         transition: opacity 1s ease-in-out;
       }
       .gallery > img.active {
@@ -493,16 +494,16 @@
       function checkPassword() {
         let passwordInput = document.getElementById("password").value;
         if (passwordInput.toLowerCase() === "babe2025") {
-          // Hide only the password box
           document.getElementById("password-box").style.display = "none";
-
-          // Show loading screen (only here)
           document.getElementById("loading-screen").style.display = "flex";
 
           setTimeout(() => {
             let messageBox = document.getElementById("message");
             document.getElementById("loading-screen").style.display = "none";
             messageBox.style.display = "block";
+
+            // Show gallery after unlocking
+            document.getElementById("gallery").style.display = "block";
 
             // Apply smooth unlock animation
             setTimeout(() => {
@@ -514,7 +515,10 @@
             audio
               .play()
               .catch((error) => console.log("Autoplay blocked:", error));
-          }, 3000); // Adjust loading time if needed
+
+            // Start the gallery slideshow
+            startGallery();
+          }, 3000);
         } else {
           alert("Wrong password! Try again.");
         }
