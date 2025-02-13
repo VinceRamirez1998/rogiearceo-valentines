@@ -6,6 +6,72 @@
     <title>Happy Valentine's Day ❤️</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+      /* Heart Loading Screen */
+      #loading-screen {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: pink;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-family: "Montserrat", sans-serif;
+        font-size: 20px;
+        color: white;
+        z-index: 99999;
+      }
+
+      .heart {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        position: relative;
+        transform: rotate(-45deg);
+        animation: heartbeat 4.2s infinite ease-in-out;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      .heart::before {
+        top: -50px;
+        left: 0;
+      }
+
+      .heart::after {
+        left: 50px;
+        top: 0;
+      }
+
+      @keyframes heartbeat {
+        0% {
+          transform: scale(1) rotate(-45deg);
+        }
+        25% {
+          transform: scale(1.1) rotate(-45deg);
+        }
+        50% {
+          transform: scale(1) rotate(-45deg);
+        }
+        75% {
+          transform: scale(1.2) rotate(-45deg);
+        }
+        100% {
+          transform: scale(1) rotate(-45deg);
+        }
+      }
       canvas {
         position: absolute;
         top: 0;
@@ -310,6 +376,12 @@
       </div>
     </div>
 
+    <!-- Loading Screen -->
+    <div style="display: none" id="loading-screen">
+      <div class="heart"></div>
+      <p style="padding-top: 30px">Loading your surprise... Please wait</p>
+    </div>
+
     <audio id="valentine-music" loop>
       <source src="music.mp3" type="audio/mp3" />
     </audio>
@@ -419,23 +491,30 @@
       }
 
       function checkPassword() {
-        const passwordInput = document.getElementById("password").value;
-        if (
-          passwordInput === "babe2025" ||
-          passwordInput === "Babe2025" ||
-          passwordInput === "BABE2025"
-        ) {
-          let messageBox = document.getElementById("message");
+        let passwordInput = document.getElementById("password").value;
+        if (passwordInput.toLowerCase() === "babe2025") {
+          // Hide only the password box
           document.getElementById("password-box").style.display = "none";
 
-          // Show message with animation
-          messageBox.style.display = "block";
-          setTimeout(() => {
-            messageBox.classList.add("show");
-          }, 200); // Slight delay to trigger transition
+          // Show loading screen (only here)
+          document.getElementById("loading-screen").style.display = "flex";
 
-          document.getElementById("valentine-music").play();
-          startGallery();
+          setTimeout(() => {
+            let messageBox = document.getElementById("message");
+            document.getElementById("loading-screen").style.display = "none";
+            messageBox.style.display = "block";
+
+            // Apply smooth unlock animation
+            setTimeout(() => {
+              messageBox.classList.add("show");
+            }, 200);
+
+            // Play music instantly
+            let audio = document.getElementById("valentine-music");
+            audio
+              .play()
+              .catch((error) => console.log("Autoplay blocked:", error));
+          }, 3000); // Adjust loading time if needed
         } else {
           alert("Wrong password! Try again.");
         }
