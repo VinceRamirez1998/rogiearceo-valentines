@@ -132,7 +132,7 @@
 
       .question-container {
         display: flex;
-        /* flex-direction: column; */
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         background: white;
@@ -147,7 +147,7 @@
       }
 
       .question-container input {
-        /* width: 100%; */
+        width: auto;
         max-width: 300px;
         padding: 10px;
         margin: 10px 0;
@@ -191,7 +191,7 @@
       }
 
       #password-box input {
-        width: 100%;
+        width: auto;
         max-width: 300px;
         padding: 10px;
         margin: 10px 0;
@@ -220,14 +220,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 500px;
-        height: 500px;
+        width: 550px; /* Fixed width for desktop */
+        height: 550px; /* Fixed height for desktop */
+        max-width: 100%; /* Prevents overflow on smaller screens */
+        aspect-ratio: 1 / 1; /* Maintains square shape */
         position: relative;
         overflow: hidden;
         border-radius: 10px;
         border: 1px solid red;
         animation: glow 1.5s infinite alternate ease-in-out;
-        margin: 0 auto; /* Centers the gallery itself */
+        margin: 0 auto; /* Centers the gallery */
       }
 
       .gallery > img {
@@ -274,17 +276,38 @@
         border-radius: 5px;
       }
 
+      @media screen and (max-width: 768px) {
+        .gallery {
+          width: 90%; /* Make it fit smaller screens */
+          max-width: 400px; /* Prevents it from being too large */
+          height: auto;
+        }
+      }
       @media screen and (max-width: 480px) {
         .gallery > img {
-          width: 65%;
+          max-width: 300px;
           margin-top: 40px;
         }
         .messages {
-          font-size: 1.3rem;
-          padding-top: 30px;
+          font-size: 1.2rem;
         }
+
         .messages1 {
-          font-size: 13px;
+          font-size: 12px;
+        }
+
+        .question-container,
+        #password-box {
+          width: auto; /* Make form elements fit smaller screens */
+        }
+
+        .question-container input,
+        #password-box input {
+          font-size: 14px; /* Adjust text size for readability */
+        }
+
+        .modal-content {
+          width: 80%;
         }
       }
     </style>
